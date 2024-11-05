@@ -1,4 +1,7 @@
+// "use client";
+
 import { DottedSeparator } from "@/components/dotted-separator";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,6 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
+// ICONS
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 export const SignInCard = () => {
   return (
@@ -19,6 +27,56 @@ export const SignInCard = () => {
       <div className="px-7 mb-2">
         <DottedSeparator />
       </div>
+      <CardContent className="p-7">
+        <form className="space-y-4">
+          <Input
+            required
+            type="email"
+            placeholder="Enter email address"
+            value={""}
+            onChange={() => {}}
+            disabled={false}
+          />
+          <Input
+            required
+            type="password"
+            placeholder="Enter password"
+            value={""}
+            onChange={() => {}}
+            disabled={false}
+            min={8}
+            max={256}
+          />
+          <Button disabled={false} size="lg" className="w-full">
+            Log in
+          </Button>
+        </form>
+      </CardContent>
+      <div className="px-7 mt-2">
+        <DottedSeparator />
+      </div>
+      <CardContent className="p-7 flex-col gap-y-4">
+        <Button
+          variant="secondary"
+          disabled={false}
+          size="lg"
+          className="w-full"
+        >
+          <FcGoogle className="mr-2" size={5} />
+          Log in with Google
+        </Button>
+      </CardContent>
+      <CardContent className="p-7 flex-col gap-y-4">
+        <Button
+          variant="secondary"
+          disabled={false}
+          size="lg"
+          className="w-full"
+        >
+          <FaGithub className="mr-2" size={5} />
+          Log in with GitHub
+        </Button>
+      </CardContent>
     </Card>
   );
 };
