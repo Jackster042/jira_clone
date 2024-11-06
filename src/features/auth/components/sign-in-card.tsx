@@ -32,6 +32,7 @@ import { Input } from "@/components/ui/input";
 // ICONS
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
+import Link from "next/link";
 
 //  FORM SCHEMA
 const formSchema = z.object({
@@ -144,7 +145,7 @@ export const SignInCard = () => {
           Log in with Google
         </Button>
       </CardContent>
-      <CardContent className="p-7 flex-col gap-y-4">
+      <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
           variant="secondary"
           disabled={false}
@@ -154,6 +155,15 @@ export const SignInCard = () => {
           <FaGithub className="mr-2 size-5" />
           Log in with GitHub
         </Button>
+      </CardContent>
+      <div className="px-7">
+        <DottedSeparator />
+      </div>
+      <CardContent className="flex items-center justify-center p-7">
+        <p>Don't have an account?</p>
+        <Link href="/sign-up">
+          <span className="text-blue-700">&nbsp;Sign up</span>
+        </Link>
       </CardContent>
     </Card>
   );
