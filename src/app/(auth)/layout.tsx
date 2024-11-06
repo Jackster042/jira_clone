@@ -13,7 +13,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
         <nav className="flex justify-between items-center">
           <Image src="/logo.svg" height={56} width={152} alt="logo" />
           <Button variant={"secondary"}>
-            <Link href="/sign-in">Sign In</Link>
+            <Link href="/sign-up">Sign-up</Link>
           </Button>
         </nav>
         <div className="flex flex-col items-center justify-center p-4 md:p-14">

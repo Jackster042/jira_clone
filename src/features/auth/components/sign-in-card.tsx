@@ -1,6 +1,24 @@
 // "use client";
 
+// ZOD
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+// REACT HOOK FORM
+import { useForm } from "react-hook-form";
+
+// FORM UI
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+
 import { DottedSeparator } from "@/components/dotted-separator";
+
+// UI
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,7 +33,22 @@ import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
+//  FORM SCHEMA
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8).max(256),
+});
+
 export const SignInCard = () => {
+  // CHECK
+  const form = useForm<z.infer<typeof formSchema>>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: zodResolver(formSchema),
+  });
+
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
       <CardHeader className="flex items-center justify-center text-center p-7">
@@ -28,41 +61,43 @@ export const SignInCard = () => {
         <DottedSeparator />
       </div>
       <CardContent className="p-7">
-        <form className="space-y-4">
-          <Input
-            required
-            type="email"
-            placeholder="Enter email address"
-            value={""}
-            onChange={() => {}}
-            disabled={false}
-          />
-          <Input
-            required
-            type="password"
-            placeholder="Enter password"
-            value={""}
-            onChange={() => {}}
-            disabled={false}
-            min={8}
-            max={256}
-          />
-          <Button disabled={false} size="lg" className="w-full">
-            Log in
-          </Button>
-        </form>
+        <Form {...form}>
+          <form className="space-y-4">
+            <Input
+              required
+              type="email"
+              placeholder="Enter email address"
+              value={""}
+              onChange={() => {}}
+              disabled={false}
+            />
+            <Input
+              required
+              type="password"
+              placeholder="Enter password"
+              value={""}
+              onChange={() => {}}
+              disabled={false}
+              min={8}
+              max={256}
+            />
+            <Button disabled={false} size="lg" className="w-full">
+              Log in
+            </Button>
+          </form>
+        </Form>
       </CardContent>
-      <div className="px-7 mt-2">
+      <div className="px-7">
         <DottedSeparator />
       </div>
-      <CardContent className="p-7 flex-col gap-y-4">
+      <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
           variant="secondary"
           disabled={false}
           size="lg"
           className="w-full"
         >
-          <FcGoogle className="mr-2" size={5} />
+          <FcGoogle className="mr-2 size-5" />
           Log in with Google
         </Button>
       </CardContent>
@@ -73,7 +108,7 @@ export const SignInCard = () => {
           size="lg"
           className="w-full"
         >
-          <FaGithub className="mr-2" size={5} />
+          <FaGithub className="mr-2 size-5" />
           Log in with GitHub
         </Button>
       </CardContent>
