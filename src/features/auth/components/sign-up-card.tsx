@@ -31,32 +31,36 @@ import { Input } from "@/components/ui/input";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
+import { registerSchema } from "../schemas";
+import { use } from "react";
+import { useRegister } from "../api/use-register";
 
 //  FORM SCHEMA
-const formSchema = z.object({
-  name: z.string().trim().min(1, "Required").max(256),
-  email: z.string().trim().email(),
-  //  MIN REQ ON SIGN UP, NOT ON LOGIN
-  password: z
-    .string()
-    .trim()
-    .min(8, "Minimum of 8 characters is required")
-    .max(256),
-});
+// const formSchema = z.object({
+//   name: z.string().trim().min(1, "Required").max(256),
+//   email: z.string().trim().email(),
+//   //  MIN REQ ON SIGN UP, NOT ON LOGIN
+//   password: z
+//     .string()
+//     .trim()
+//     .min(8, "Minimum of 8 characters is required")
+//     .max(256),
+// });
 
 export const SignUpCard = () => {
+  const { mutate } = useRegister();
   // CHECK
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.infer<typeof registerSchema>>({
     defaultValues: {
       name: "",
       email: "",
       password: "",
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof registerSchema>) => {
+    mutate({ json: values });
   };
 
   return (
