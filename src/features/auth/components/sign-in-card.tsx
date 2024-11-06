@@ -1,4 +1,23 @@
 // "use client";
+// Here are some helpful links for login validation approaches:
+
+// 1. Using Formik with Yup validation:
+// https://formik.org/docs/guides/validation#validationschema
+
+// 2. Using React Final Form:
+// https://final-form.org/docs/react-final-form/examples/field-level-validation
+
+// 3. Using Joi validation library:
+// https://github.com/hapijs/joi
+
+// 4. Using custom validation with useReducer:
+// https://github.com/WebDevSimplified/React-Simplified-Advanced-Projects/tree/main/34-35-custom-form-validation
+
+// 5. Using Vuelidate (for Vue.js comparison):
+// https://vuelidate-next.netlify.app/
+
+// Current implementation uses Zod + React Hook Form which is a solid modern approach
+// The above alternatives offer different tradeoffs in terms of bundle size, features and complexity
 
 // ZOD
 import { z } from "zod";
@@ -34,25 +53,29 @@ import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import Link from "next/link";
 
+import { loginSchema } from "../schemas";
+import { useLogin } from "../api/use-login";
+
 //  FORM SCHEMA
-const formSchema = z.object({
-  email: z.string().trim().email(),
-  //  MIN REQ ON SIGN UP, NOT ON LOGIN
-  password: z.string().trim().min(1, "Required").max(256),
-});
+// const formSchema = z.object({
+//   email: z.string().trim().email(),
+//   //  MIN REQ ON SIGN UP, NOT ON LOGIN
+//   password: z.string().trim().min(1, "Required").max(256),
+// });
 
 export const SignInCard = () => {
+  const { mutate } = useLogin();
+
   // CHECK
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.infer<typeof loginSchema>>({
     defaultValues: {
       email: "",
       password: "",
     },
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(loginSchema),
   });
-
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  const onSubmit = (values: z.infer<typeof loginSchema>) => {
+    mutate({ json: values });
   };
 
   return (
