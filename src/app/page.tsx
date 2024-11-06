@@ -14,8 +14,6 @@ export default function Home() {
         <Button variant={"outline"}>Outline</Button>
         <Button variant={"muted"}>Muted</Button>
         <Button variant={"teritary"}>Teritrary</Button>
-        {/* <Link href="/sign-in">Sign In</Link>
-        <Link href="/sign-up">Sign Up</Link> */}
       </div>
     </>
   );
