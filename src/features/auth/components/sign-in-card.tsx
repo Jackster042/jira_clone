@@ -35,8 +35,9 @@ import { FaGithub } from "react-icons/fa";
 
 //  FORM SCHEMA
 const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8).max(256),
+  email: z.string().trim().email(),
+  //  MIN REQ ON SIGN UP, NOT ON LOGIN
+  password: z.string().trim().min(1, "Required").max(256),
 });
 
 export const SignInCard = () => {
@@ -48,6 +49,10 @@ export const SignInCard = () => {
     },
     resolver: zodResolver(formSchema),
   });
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+  };
 
   return (
     <Card className="w-full h-full md:w-[487px] border-none shadow-none">
@@ -63,15 +68,47 @@ export const SignInCard = () => {
       <CardContent className="p-7">
         <Form {...form}>
           <form className="space-y-4">
-            <Input
-              required
-              type="email"
-              placeholder="Enter email address"
-              value={""}
-              onChange={() => {}}
-              disabled={false}
+            <FormField
+              name="email"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      // required
+                      type="email"
+                      placeholder="Enter email address"
+                      // value={field.value}
+                      // onChange={field.onChange}
+                      // disabled={false}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-            <Input
+            <FormField
+              name="password"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      // required
+                      type="password"
+                      placeholder="Enter password"
+                      // value={field.value}
+                      // onChange={field.onChange}
+                      // disabled={false}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {/* <Input
               required
               type="password"
               placeholder="Enter password"
@@ -80,8 +117,14 @@ export const SignInCard = () => {
               disabled={false}
               min={8}
               max={256}
-            />
-            <Button disabled={false} size="lg" className="w-full">
+            /> */}
+            <Button
+              disabled={false}
+              size="lg"
+              className="w-full"
+              type="submit"
+              onClick={form.handleSubmit(onSubmit)}
+            >
               Log in
             </Button>
           </form>
