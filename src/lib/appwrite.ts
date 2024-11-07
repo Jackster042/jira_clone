@@ -15,7 +15,7 @@ export async function createAdminClient() {
     .setKey(process.env.NEXT_APPWRITE_KEY!);
 
   return {
-    getAccount: () => new Account(client),
+    account: () => new Account(client),
     // getStorage: () => new Storage(client),
     // getUsers: () => new Users(client),
     // getDatabases: () => new Databases(client),
