@@ -3,28 +3,46 @@ import { zValidator } from "@hono/zod-validator";
 
 import { loginSchema, registerSchema } from "../schemas";
 import { createAdminClient } from "@/lib/appwrite";
-import { setCookie } from "hono/cookie";
+
+import { setCookie, deleteCookie } from "hono/cookie";
 import { ID } from "node-appwrite";
+
 import { AUTH_COOKIE } from "../constants";
 
 const app = new Hono()
+  // LOGIN
   .post(
     "/login",
     zValidator("json", loginSchema),
 
     async (c) => {
       const { email, password } = c.req.valid("json");
-      console.log({ email, password });
+      // console.log({ email, password });
+      const { account } = await createAdminClient();
 
-      return c.json({ email, password });
+      const session = await account().createEmailPasswordSession(
+        email,
+        password
+      );
+
+      setCookie(c, AUTH_COOKIE, session.secret, {
+        path: "/",
+        httpOnly: true,
+        sameSite: "strict",
+        secure: true,
+        maxAge: 60 * 60 * 24 * 30,
+      });
+
+      return c.json({ success: true });
     }
   )
+  // REGISTER
   .post("/register", zValidator("json", registerSchema), async (c) => {
     const { name, email, password } = c.req.valid("json");
     // console.log({ name, email, password });
 
     const { account } = await createAdminClient();
-    const user = await account().create(ID.unique(), email, password, name);
+    await account().create(ID.unique(), email, password, name);
 
     const session = await account().createEmailPasswordSession(email, password);
 
@@ -37,7 +55,12 @@ const app = new Hono()
       maxAge: 60 * 60 * 24 * 30,
     });
 
-    return c.json({ data: user });
+    return c.json({ success: true });
+  })
+  // LOGOUT
+  .post("/logout", (c) => {
+    deleteCookie(c, AUTH_COOKIE);
+    return c.json({ success: true });
   });
 
 export default app;
