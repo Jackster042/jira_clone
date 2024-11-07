@@ -8,8 +8,14 @@ import { setCookie, deleteCookie } from "hono/cookie";
 import { ID } from "node-appwrite";
 
 import { AUTH_COOKIE } from "../constants";
+import { sessionMiddleware } from "@/lib/session-middleware";
 
 const app = new Hono()
+  // GET CURRENTLY LOGGED IN USER
+  .get("/user", sessionMiddleware, async (c) => {
+    const user = c.get("user");
+    return c.json(user);
+  })
   // LOGIN
   .post(
     "/login",
@@ -58,8 +64,13 @@ const app = new Hono()
     return c.json({ success: true });
   })
   // LOGOUT
-  .post("/logout", (c) => {
+  .post("/logout", sessionMiddleware, async (c) => {
+    const account = c.get("account");
+
     deleteCookie(c, AUTH_COOKIE);
+
+    await account?.deleteSession("current");
+
     return c.json({ success: true });
   });
 
