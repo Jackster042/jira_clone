@@ -9,7 +9,8 @@ export const useCurrent = () => {
       if (!response.ok) {
         return null;
       }
-      return await response.json();
+      const data = await response.json();
+      return { data };
     },
   });
   return query;
