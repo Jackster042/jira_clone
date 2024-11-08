@@ -65,7 +65,7 @@ import { redirect } from "next/navigation";
 // });
 
 export const SignInCard = () => {
-  const { mutate } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   // CHECK
   const form = useForm<z.infer<typeof loginSchema>>({
@@ -144,7 +144,7 @@ export const SignInCard = () => {
               max={256}
             /> */}
             <Button
-              disabled={false}
+              disabled={isPending}
               size="lg"
               className="w-full"
               type="submit"
@@ -161,7 +161,7 @@ export const SignInCard = () => {
       <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >
@@ -172,7 +172,7 @@ export const SignInCard = () => {
       <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >

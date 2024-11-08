@@ -48,7 +48,7 @@ import { useRegister } from "../api/use-register";
 // });
 
 export const SignUpCard = () => {
-  const { mutate } = useRegister();
+  const { mutate, isPending } = useRegister();
   // CHECK
   const form = useForm<z.infer<typeof registerSchema>>({
     defaultValues: {
@@ -144,7 +144,7 @@ export const SignUpCard = () => {
                 </FormItem>
               )}
             />
-            <Button disabled={false} size="lg" className="w-full">
+            <Button disabled={isPending} size="lg" className="w-full">
               Register
             </Button>
           </form>
@@ -156,7 +156,7 @@ export const SignUpCard = () => {
       <CardContent className="p-7 flex flex-col gap-y-4">
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >
@@ -167,7 +167,7 @@ export const SignUpCard = () => {
       <CardContent className="p-7 flex-col gap-y-4">
         <Button
           variant="secondary"
-          disabled={false}
+          disabled={isPending}
           size="lg"
           className="w-full"
         >
