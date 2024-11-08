@@ -21,10 +21,8 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen">
-        Only visible to Authirozed Users
+      <div>
         <UserButton />
-        <Button onClick={() => mutate()}>Logout</Button>
       </div>
     </>
   );
