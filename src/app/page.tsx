@@ -1,19 +1,21 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import Link from "next/link";
+"use client";
 
-export default async function Home() {
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useCurrent } from "@/features/auth/api/use-current";
+
+export default function Home() {
+  const router = useRouter();
+  const { data, isLoading } = useCurrent();
+  useEffect(() => {
+    if (!data && !isLoading) {
+      router.push("/sign-in");
+    }
+  }, [data]);
   return (
     <>
-      <div className="flex gap-4 flex-wrap">
-        <Input />
-        <Button variant={"primary"}>Primary</Button>
-        <Button variant={"secondary"}>Secondary</Button>
-        <Button variant={"destructive"}>Destructive</Button>
-        <Button variant={"ghost"}>Ghost</Button>
-        <Button variant={"outline"}>Outline</Button>
-        <Button variant={"muted"}>Muted</Button>
-        <Button variant={"teritary"}>Teritrary</Button>
+      <div className="flex items-center justify-center h-screen">
+        <h1 className="text-2xl font-bold">Only visible to Authirozed Users</h1>
       </div>
     </>
   );
