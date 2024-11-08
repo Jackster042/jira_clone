@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 // Here are some helpful links for login validation approaches:
 
 // 1. Using Formik with Yup validation:
@@ -55,6 +55,7 @@ import Link from "next/link";
 
 import { loginSchema } from "../schemas";
 import { useLogin } from "../api/use-login";
+import { redirect } from "next/navigation";
 
 //  FORM SCHEMA
 // const formSchema = z.object({

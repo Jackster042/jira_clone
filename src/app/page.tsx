@@ -1,23 +1,37 @@
-"use client";
+// "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useCurrent } from "@/features/auth/api/use-current";
-import { useLogout } from "@/features/auth/api/use-logout";
-import { Button } from "@/components/ui/button";
+// import { useEffect } from "react";
+// import { useRouter } from "next/navigation";
+// import { useCurrent } from "@/features/auth/api/use-current";
+// import { useLogout } from "@/features/auth/api/use-logout";
+// import { Button } from "@/components/ui/button";
+
+import { getCurrent } from "@/features/auth/actions";
 
 import { UserButton } from "@/features/auth/components/user-button";
+import { redirect } from "next/navigation";
 
-export default function Home() {
-  const router = useRouter();
-  const { mutate } = useLogout();
-  const { data, isLoading } = useCurrent();
+// INIT ABROACH WAS USE- EFFECT TO CHECK IF USER IS LOGGED IN
+// NOW USING QUERY TO CHECK IF USER IS LOGGED IN
 
-  useEffect(() => {
-    if (!data && !isLoading) {
-      router.push("/sign-in");
-    }
-  }, [data]);
+export default async function Home() {
+  //  WE HAVE TO AWAIT FOR REDIRECT HERE
+  const user = await getCurrent();
+  console.log({ user });
+  //  IF NO USER REDIRECT TO SIGN IN
+  // RETURNS 307 TEMPORARY REDIRECT
+  if (!user) redirect("/sign-in");
+
+  // console.log(user);
+  // const router = useRouter();
+  // const { mutate } = useLogout();
+  // const { data, isLoading } = useCurrent();
+
+  // useEffect(() => {
+  //   if (!data && !isLoading) {
+  //     router.push("/sign-in");
+  //   }
+  // }, [data]);
 
   return (
     <>

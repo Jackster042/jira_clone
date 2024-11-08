@@ -19,7 +19,7 @@ import { DottedSeparator } from "@/components/dotted-separator";
 
 export const UserButton = () => {
   const { data: user, isLoading } = useCurrent();
-  console.log(user);
+  // console.log(user);
   const { mutate: logout } = useLogout();
 
   if (isLoading) {

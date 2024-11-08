@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 // ZOD
 import { z } from "zod";
@@ -145,7 +145,7 @@ export const SignUpCard = () => {
               )}
             />
             <Button disabled={false} size="lg" className="w-full">
-              Sign up
+              Register
             </Button>
           </form>
         </Form>
