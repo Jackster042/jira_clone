@@ -7,7 +7,7 @@ interface DashboardLayoutProps {
 const DashboardLayout = ({ children }: DashboardLayoutProps) => {
   return (
     <div className="min-h-screen">
-      <div className="flex w-full h-full  border border-red-500">
+      <div className="flex w-full h-full">
         {/* NAVBAR */}
         <div className="fixed top-0 left-0 hidden lg:block lg:w-[264px] h-full overflow-y-auto">
           <Sidebar />
