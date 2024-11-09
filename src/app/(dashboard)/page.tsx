@@ -35,7 +35,7 @@ export default async function Home() {
 
   return (
     <>
-      {/* <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold">Welcome to your Dashboard</h2>
         <p className="text-muted-foreground">
           Here you can manage your projects, track tasks, and monitor team
@@ -62,8 +62,8 @@ export default async function Home() {
             </p>
           </div>
         </div>
-      </div> */}
-      <div>This is HomePage</div>
+      </div>
+      {/* <div>This is HomePage</div> */}
     </>
   );
 }

@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
 import auth from "@/features/auth/server/route";
-
+import workspaces from "@/features/workspaces/server/route";
 // The type inference for chained methods in Hono works through TypeScript's method chaining
 // When we chain methods like app.get().post(), each method returns the Hono instance
 // This allows TypeScript to maintain type information throughout the chain
@@ -35,7 +35,7 @@ const app = new Hono().basePath("/api");
 //   return c.json({ project: projectId });
 // });
 
-const routes = app.route("/auth", auth);
+const routes = app.route("/auth", auth).route("/workspaces", workspaces);
 
 export const GET = handle(app);
 export const POST = handle(app);
