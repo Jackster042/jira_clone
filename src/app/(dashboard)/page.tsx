@@ -9,6 +9,7 @@
 import { getCurrent } from "@/features/auth/actions";
 
 import { UserButton } from "@/features/auth/components/user-button";
+import { CreateWorkspaceForm } from "@/features/workspaces/components/create-workspace-form";
 import { redirect } from "next/navigation";
 
 // INIT ABROACH WAS USE- EFFECT TO CHECK IF USER IS LOGGED IN
@@ -35,7 +36,8 @@ export default async function Home() {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <CreateWorkspaceForm />
+      {/* <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-semibold">Welcome to your Dashboard</h2>
         <p className="text-muted-foreground">
           Here you can manage your projects, track tasks, and monitor team
@@ -62,7 +64,7 @@ export default async function Home() {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <div>This is HomePage</div> */}
     </>
   );
