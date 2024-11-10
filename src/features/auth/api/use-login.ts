@@ -3,6 +3,8 @@ import { client } from "@/lib/rpc";
 import { InferRequestType, InferResponseType } from "hono";
 import { useRouter } from "next/dist/client/components/navigation";
 
+import { toast } from "sonner";
+
 type ResponseType = InferResponseType<(typeof client.api.auth.login)["$post"]>;
 type RequestType = InferRequestType<(typeof client.api.auth.login)["$post"]>;
 
@@ -18,6 +20,10 @@ export const useLogin = () => {
       router.refresh();
       queryClient.invalidateQueries({ queryKey: ["current"] });
       // window.location.reload();
+      toast.success("Logged in successfully");
+    },
+    onError: () => {
+      toast.error("Failed to login");
     },
   });
   return mutation;

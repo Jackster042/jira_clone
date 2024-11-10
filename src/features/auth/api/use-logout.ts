@@ -3,6 +3,8 @@ import { InferResponseType } from "hono";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
+import { toast } from "sonner";
+
 type ResponseType = InferResponseType<(typeof client.api.auth.logout)["$post"]>;
 
 export const useLogout = () => {
@@ -17,6 +19,10 @@ export const useLogout = () => {
       router.refresh();
       // window.location.reload();
       queryClient.invalidateQueries({ queryKey: ["current"] });
+      toast.success("Logged out successfully");
+    },
+    onError: () => {
+      toast.error("Failed to logout");
     },
   });
   return mutation;

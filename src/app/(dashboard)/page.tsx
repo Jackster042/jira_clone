@@ -7,6 +7,7 @@
 // import { Button } from "@/components/ui/button";
 
 import { getCurrent } from "@/features/auth/actions";
+// import { Toaster } from "sonner";
 
 import { UserButton } from "@/features/auth/components/user-button";
 import { CreateWorkspaceForm } from "@/features/workspaces/components/create-workspace-form";

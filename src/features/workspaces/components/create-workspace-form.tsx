@@ -1,5 +1,7 @@
 "use client";
 
+// import { toast } from "sonner";
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,8 +41,12 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
 
   const onSubmit = (values: z.infer<typeof createWorkspaceSchema>) => {
     mutate({ json: values });
-    console.log({ values });
+    // console.log({ values });
   };
+
+  // const notify = (message: string) => {
+  //   toast.success(message);
+  // };
 
   return (
     <Card className="w-full h-full border-none shadow-none">
@@ -84,6 +90,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                 size="lg"
                 variant="primary"
                 disabled={isPending}
+                // onClick={() => notify("Workspace created successfully")}
               >
                 Create Workspace
               </Button>
