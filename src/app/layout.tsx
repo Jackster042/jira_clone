@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(inter.className, "antialiased min-h-screen")}>
         <QueryProvider>
-          <Toaster position="top-right" duration={3000} />
+          <Toaster position="top-center" duration={2000} />
           {children}
         </QueryProvider>
       </body>

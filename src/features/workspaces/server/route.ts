@@ -15,7 +15,7 @@ const app = new Hono().post(
     const databases = c.get("databases");
     const user = c.get("user");
 
-    const { name } = c.req.valid("json");
+    const { name, image } = c.req.valid("json");
 
     // CREATE DOCUMENT
     const workspace = await databases.createDocument(
@@ -25,6 +25,7 @@ const app = new Hono().post(
       {
         name,
         userId: user.$id,
+        image,
       }
     );
     return c.json({ data: workspace });
