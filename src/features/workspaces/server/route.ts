@@ -8,7 +8,9 @@ import { DATABASE_ID, IMAGES_BUCKET_ID, WORKSPACES_ID } from "@/config";
 
 const app = new Hono().post(
   "/",
-  zValidator("json", createWorkspaceSchema),
+  // SWITCHED TO FORM VALIDATION COZ WE CANT SEND IMAGE THRU JSON
+  // WE HAVE TO USE FORM DATA
+  zValidator("form", createWorkspaceSchema),
   sessionMiddleware,
   async (c) => {
     // CREATE WORKSPACE
@@ -16,7 +18,8 @@ const app = new Hono().post(
     const storage = c.get("storage");
     const user = c.get("user");
 
-    const { name, image } = c.req.valid("json");
+    // FORM > JSON CHANGE HERE TOO
+    const { name, image } = c.req.valid("form");
 
     let uploadedImageUrl: string | undefined;
 
