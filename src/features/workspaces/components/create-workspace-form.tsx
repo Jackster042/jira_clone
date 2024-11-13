@@ -94,11 +94,7 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                   <FormItem>
                     <FormLabel>Workspace Name</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        placeholder="Enter workspace name"
-                        autoComplete="organization"
-                      />
+                      <Input {...field} placeholder="Enter workspace name" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
