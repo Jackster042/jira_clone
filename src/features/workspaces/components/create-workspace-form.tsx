@@ -56,7 +56,9 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
         onSuccess: () => {
           form.reset();
         },
-        // TODO: REDIRECT TO NEW WORKSPACE
+        onError: (error) => {
+          console.error("Mutation error:", error);
+        },
       }
     );
     // console.log({ values });
@@ -92,7 +94,11 @@ export const CreateWorkspaceForm = ({ onCancel }: CreateWorkspaceFormProps) => {
                   <FormItem>
                     <FormLabel>Workspace Name</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Enter workspace name" />
+                      <Input
+                        {...field}
+                        placeholder="Enter workspace name"
+                        autoComplete="organization"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

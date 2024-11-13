@@ -17,7 +17,7 @@ import {
 export const WorkspaceSwitcher = () => {
   const { data } = useGetWorkspaces();
   const documents = data?.data?.data?.documents;
-  console.log(documents);
+  // console.log(documents);
   return (
     // <div>{data?.data?.data?.documents.map((workspace) => workspace.name)}</div>
     // <div>{data?.data?.data?.total}</div>
