@@ -3,7 +3,7 @@ import { zValidator } from "@hono/zod-validator";
 
 import { createWorkspaceSchema } from "../schemas";
 import { sessionMiddleware } from "@/lib/session-middleware";
-import { ID } from "node-appwrite";
+import { ID, Query } from "node-appwrite";
 import { MemberRole } from "@/features/members/types";
 import {
   DATABASE_ID,
@@ -14,11 +14,34 @@ import {
 
 const app = new Hono()
   .get("/", sessionMiddleware, async (c) => {
+    // GET USER
+    const user = c.get("user");
+
     const databases = c.get("databases");
+
+    // GET MEMBERS & GET QUERY FROM NODE APPWRITE
+    const members = await databases.listDocuments(DATABASE_ID, MEMBERS_ID, [
+      // GET MEMBERS WHERE USER ID IS EQUAL TO THE USER ID
+      Query.equal("userId", user.$id),
+    ]);
+
+    // CHECK IF THERES MEMBERS
+    if (members.total === 0) {
+      return c.json({ data: { documents: [], total: 0 } });
+    }
+    // IF THERES NO MEMBERS NO POINT IN LOADING WORKSPACES
+
+    // WORKSPACE ID
+    const workspaceIds = members.documents.map((member) => member.workspaceId);
+
+    // GET WORKSPACES
     const workspaces = await databases.listDocuments(
       DATABASE_ID,
-      WORKSPACES_ID
+      WORKSPACES_ID,
+      // GET WORKSPACES WHERE ID IS IN THE ARRAY OF WORKSPACE IDS
+      [Query.orderDesc("$createdAt"), Query.contains("$id", workspaceIds)]
     );
+
     return c.json({ data: workspaces });
   })
   .post(

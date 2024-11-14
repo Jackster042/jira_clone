@@ -24,6 +24,7 @@ export const useLogout = () => {
       router.refresh();
       // window.location.reload();
       queryClient.invalidateQueries({ queryKey: ["current"] });
+      queryClient.invalidateQueries({ queryKey: ["workspaces"] });
       toast.success("Logged out successfully");
     },
     onError: () => {
