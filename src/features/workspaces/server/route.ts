@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 
 import { createWorkspaceSchema } from "../schemas";
+import { generateInviteCode } from "@/lib/utils";
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { ID, Query } from "node-appwrite";
 import { MemberRole } from "@/features/members/types";
@@ -87,6 +88,7 @@ const app = new Hono()
           name,
           userId: user.$id,
           imageUrl: uploadedImageUrl,
+          inviteCode: generateInviteCode(10),
         }
       );
 
