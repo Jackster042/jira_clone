@@ -13,11 +13,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useRouter } from "next/navigation";
+import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
 export const WorkspaceSwitcher = () => {
+  const workspaceId = useWorkspaceId();
+  const router = useRouter();
+
   const { data } = useGetWorkspaces();
   const documents = data?.data?.data?.documents;
   // console.log(documents);
+
+  const onSelect = (id: string) => {
+    router.push(`/workspaces/${id}`);
+  };
+
   return (
     // <div>{data?.data?.data?.documents.map((workspace) => workspace.name)}</div>
     // <div>{data?.data?.data?.total}</div>
@@ -31,7 +41,7 @@ export const WorkspaceSwitcher = () => {
         </p>
         <RiAddCircleFill className="size-5 text-neutral-500 cursor-pointer hover:opacity-75 transition" />
       </div>
-      <Select>
+      <Select onValueChange={onSelect} value={workspaceId}>
         <SelectTrigger className="w-full bg-neutral-200 font-medium p-1">
           <SelectValue placeholder="No workspace selected" />
         </SelectTrigger>
